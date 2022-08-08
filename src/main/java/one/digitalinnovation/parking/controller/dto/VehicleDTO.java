@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ParkingDTO {
+public class VehicleDTO {
 
     private String id;
     private String license;

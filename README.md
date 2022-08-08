@@ -2,12 +2,12 @@
 
 
 ## Run database
-docker run --name parking-db -p 5432:5432 -e POSTGRES_DB=parking -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=123 -d postgres:10-alpine
+docker run --name vehicle-db -p 5432:5432 -e POSTGRES_DB=vehicle -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=123 -d postgres:10-alpine
 
 ## Start and Stop
 
 ### Stop Database
-docker stop parking-db
+docker stop vehicle-db
 
 ### Start Database
-docker start parking-db
+docker start vehicle-db

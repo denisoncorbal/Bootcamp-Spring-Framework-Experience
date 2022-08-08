@@ -9,10 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import io.restassured.RestAssured;
-import one.digitalinnovation.parking.controller.dto.ParkingCreateDTO;
+import one.digitalinnovation.parking.controller.dto.VehicleCreateDTO;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class ParkingControllerTest extends AbstractContainerBase {
+class VehicleControllerTest extends AbstractContainerBase {
 
     @LocalServerPort
     private int randomPort;
@@ -34,7 +34,7 @@ class ParkingControllerTest extends AbstractContainerBase {
 
     @Test
     void whenCreateThenCheckIsCreated() {
-        var createDTO = new ParkingCreateDTO();
+        var createDTO = new VehicleCreateDTO();
         createDTO.setColor("AMARELO");
         createDTO.setLicense("WRT-5555");
         createDTO.setModel("BRASILIA");

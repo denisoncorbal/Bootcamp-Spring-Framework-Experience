@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Parking {
+public class Vehicle {
 
     @Id
     private String id;
@@ -18,7 +18,7 @@ public class Parking {
     private LocalDateTime exitDate;
     private Double bill;
 
-    public Parking(String id, String license, String state, String model, String color) {
+    public Vehicle(String id, String license, String state, String model, String color) {
         this.id = id;
         this.license = license;
         this.state = state;
@@ -26,7 +26,7 @@ public class Parking {
         this.color = color;
     }
 
-    public Parking() {
+    public Vehicle() {
     }
 
     public String getId() {

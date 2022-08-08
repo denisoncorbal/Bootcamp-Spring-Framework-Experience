@@ -3,8 +3,8 @@ package one.digitalinnovation.parking.controller;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.restassured.RestAssured;
-import one.digitalinnovation.parking.controller.dto.ParkingCreateDTO;
-import one.digitalinnovation.parking.controller.dto.ParkingDTO;
+import one.digitalinnovation.parking.controller.dto.VehicleCreateDTO;
+import one.digitalinnovation.parking.controller.dto.VehicleDTO;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,13 +27,13 @@ public class ParkedControllerTest extends AbstractContainerBase{
   @Test
   void whenTryingParkWithParkedPendingThenThrowVehicleAlredyParkedException(){
     assertThrows(VehicleAlreadyParkedException.class, () -> {
-      var vehicleCreateDTO = new ParkingCreateDTO();
+      var vehicleCreateDTO = new VehicleCreateDTO();
       vehicleCreateDTO.setColor("AMARELO");
       vehicleCreateDTO.setLicense("WRT-5555");
       vehicleCreateDTO.setModel("BRASILIA");
       vehicleCreateDTO.setState("SP");
 
-      var parkingCreateDTO = new ParkingCreateDTO();
+      var parkingCreateDTO = new VehicleCreateDTO();
       parkingCreateDTO.setCapacity(10);
       parkingCreateDTO.setName("Estacionamento Teste");
 
@@ -45,13 +45,13 @@ public class ParkedControllerTest extends AbstractContainerBase{
           .post("/vehicle")
               .getBody().as(VehicleDTO.class);
 
-      ParkingDTO parkingDTO = RestAssured.given()
+      VehicleDTO parkingDTO = RestAssured.given()
           .when()
           .auth().basic("user", "12345")
           .contentType(MediaType.APPLICATION_JSON_VALUE)
           .body(parkingCreateDTO)
           .post("/parking")
-              .getBody().as(ParkingDTO.class);
+              .getBody().as(VehicleDTO.class);
 
       ParkedCreateDTO parkedCreateDTO = new ParkedCreateDTO();
 
@@ -83,13 +83,13 @@ public class ParkedControllerTest extends AbstractContainerBase{
   @Test
   void whenTryingParkWithMaximumCapacityReachedThenThrowParkingCapacityExceeded(){
     assertThrows(ParkingCapacityExceededException.class, () -> {
-      var vehicleCreateDTO = new ParkingCreateDTO();
+      var vehicleCreateDTO = new VehicleCreateDTO();
       vehicleCreateDTO.setColor("AMARELO");
       vehicleCreateDTO.setLicense("WRT-5555");
       vehicleCreateDTO.setModel("BRASILIA");
       vehicleCreateDTO.setState("SP");
 
-      var parkingCreateDTO = new ParkingCreateDTO();
+      var parkingCreateDTO = new VehicleCreateDTO();
       parkingCreateDTO.setCapacity(0);
       parkingCreateDTO.setName("Estacionamento Teste");
 
@@ -101,13 +101,13 @@ public class ParkedControllerTest extends AbstractContainerBase{
           .post("/vehicle")
           .getBody().as(VehicleDTO.class);
 
-      ParkingDTO parkingDTO = RestAssured.given()
+      VehicleDTO parkingDTO = RestAssured.given()
           .when()
           .auth().basic("user", "12345")
           .contentType(MediaType.APPLICATION_JSON_VALUE)
           .body(parkingCreateDTO)
           .post("/parking")
-          .getBody().as(ParkingDTO.class);
+          .getBody().as(VehicleDTO.class);
 
       ParkedCreateDTO parkedCreateDTO = new ParkedCreateDTO();
 

@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>one.digitalinnovation</groupId>
-    <artifactId>cloud-parking</artifactId>
+    <artifactId>cloud-vehicle</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Cloud Parking</name>
     <description>Cloud Parking</description>

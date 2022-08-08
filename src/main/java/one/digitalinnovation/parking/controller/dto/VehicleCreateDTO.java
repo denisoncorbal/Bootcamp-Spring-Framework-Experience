@@ -1,6 +1,6 @@
 package one.digitalinnovation.parking.controller.dto;
 
-public class ParkingCreateDTO {
+public class VehicleCreateDTO {
 
     private String license;
     private String state;

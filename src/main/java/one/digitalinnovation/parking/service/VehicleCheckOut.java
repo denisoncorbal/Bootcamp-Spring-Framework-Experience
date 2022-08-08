@@ -3,9 +3,9 @@ package one.digitalinnovation.parking.service;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-import one.digitalinnovation.parking.model.Parking;
+import one.digitalinnovation.parking.model.Vehicle;
 
-public class ParkingCheckOut {
+public class VehicleCheckOut {
 
     public static final int ONE_HOUR = 60;
     public static final int TWENTY_FOUR_HOUR = 24 * ONE_HOUR;
@@ -36,8 +36,8 @@ public class ParkingCheckOut {
         return bill;
     }
 
-    public static Double getBill(Parking parking) {
-        return getBill(parking.getEntryDate(), parking.getExitDate());
+    public static Double getBill(Vehicle vehicle) {
+        return getBill(vehicle.getEntryDate(), vehicle.getExitDate());
     }
 
 }
