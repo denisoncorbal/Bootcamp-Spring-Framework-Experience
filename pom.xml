@@ -19,7 +19,8 @@
     <java.version>11</java.version>
     <springfox-swagger.version>2.9.2</springfox-swagger.version>
     <modelmapper.version>2.3.5</modelmapper.version>
-    <testcontainers.version>1.15.0</testcontainers.version>
+    <testcontainers.version>1.17.3</testcontainers.version>
+    <rest-assured.version>5.1.1</rest-assured.version>
   </properties>
 
   <dependencies>
@@ -75,6 +76,7 @@
     <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
+      <version>${rest-assured.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>

@@ -1,4 +1,4 @@
-package one.digitalinnovation.parking.controller;
+package one.digitalinnovation.parking.controller.TestContainer;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -13,13 +13,16 @@ import one.digitalinnovation.parking.exception.VehicleAlreadyParkedException;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ParkedControllerTest extends AbstractContainerBase{
+@DisabledOnOs(OS.WINDOWS)
+public class ParkedControllerTest extends AbstractContainerBase {
 
   @LocalServerPort
   private int randomPort;
@@ -30,7 +33,7 @@ public class ParkedControllerTest extends AbstractContainerBase{
   }
 
   @Test
-  void whenTryingParkWithParkedPendingThenThrowVehicleAlredyParkedException(){
+  void whenTryingParkWithParkedPendingThenThrowVehicleAlredyParkedException() {
     assertThrows(VehicleAlreadyParkedException.class, () -> {
       var vehicleCreateDTO = new VehicleCreateDTO();
       vehicleCreateDTO.setColor("AMARELO");
@@ -48,7 +51,7 @@ public class ParkedControllerTest extends AbstractContainerBase{
           .contentType(MediaType.APPLICATION_JSON_VALUE)
           .body(vehicleCreateDTO)
           .post("/vehicle")
-              .getBody().as(VehicleDTO.class);
+          .getBody().as(VehicleDTO.class);
 
       ParkingDTO parkingDTO = RestAssured.given()
           .when()
@@ -56,12 +59,12 @@ public class ParkedControllerTest extends AbstractContainerBase{
           .contentType(MediaType.APPLICATION_JSON_VALUE)
           .body(parkingCreateDTO)
           .post("/parking")
-              .getBody().as(ParkingDTO.class);
+          .getBody().as(ParkingDTO.class);
 
       ParkedCreateDTO parkedCreateDTO = new ParkedCreateDTO();
 
-      parkedCreateDTO.setVehicleDTO(vehicleDTO);
-      parkedCreateDTO.setParkingDTO(parkingDTO);
+      parkedCreateDTO.setVehicleId(vehicleDTO.getId());
+      parkedCreateDTO.setParkingId(parkingDTO.getId());
 
       RestAssured.given()
           .when()
@@ -86,7 +89,7 @@ public class ParkedControllerTest extends AbstractContainerBase{
   }
 
   @Test
-  void whenTryingParkWithMaximumCapacityReachedThenThrowParkingCapacityExceeded(){
+  void whenTryingParkWithMaximumCapacityReachedThenThrowParkingCapacityExceeded() {
     assertThrows(ParkingCapacityExceededException.class, () -> {
       var vehicleCreateDTO = new VehicleCreateDTO();
       vehicleCreateDTO.setColor("AMARELO");
@@ -116,8 +119,8 @@ public class ParkedControllerTest extends AbstractContainerBase{
 
       ParkedCreateDTO parkedCreateDTO = new ParkedCreateDTO();
 
-      parkedCreateDTO.setVehicleDTO(vehicleDTO);
-      parkedCreateDTO.setParkingDTO(parkingDTO);
+      parkedCreateDTO.setVehicleId(vehicleDTO.getId());
+      parkedCreateDTO.setParkingId(parkingDTO.getId());
 
       RestAssured.given()
           .when()
