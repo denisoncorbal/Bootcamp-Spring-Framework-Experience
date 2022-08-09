@@ -3,8 +3,13 @@ package one.digitalinnovation.parking.controller;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.restassured.RestAssured;
+import one.digitalinnovation.parking.controller.dto.ParkedCreateDTO;
+import one.digitalinnovation.parking.controller.dto.ParkingCreateDTO;
+import one.digitalinnovation.parking.controller.dto.ParkingDTO;
 import one.digitalinnovation.parking.controller.dto.VehicleCreateDTO;
 import one.digitalinnovation.parking.controller.dto.VehicleDTO;
+import one.digitalinnovation.parking.exception.ParkingCapacityExceededException;
+import one.digitalinnovation.parking.exception.VehicleAlreadyParkedException;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +38,7 @@ public class ParkedControllerTest extends AbstractContainerBase{
       vehicleCreateDTO.setModel("BRASILIA");
       vehicleCreateDTO.setState("SP");
 
-      var parkingCreateDTO = new VehicleCreateDTO();
+      var parkingCreateDTO = new ParkingCreateDTO();
       parkingCreateDTO.setCapacity(10);
       parkingCreateDTO.setName("Estacionamento Teste");
 
@@ -45,18 +50,18 @@ public class ParkedControllerTest extends AbstractContainerBase{
           .post("/vehicle")
               .getBody().as(VehicleDTO.class);
 
-      VehicleDTO parkingDTO = RestAssured.given()
+      ParkingDTO parkingDTO = RestAssured.given()
           .when()
           .auth().basic("user", "12345")
           .contentType(MediaType.APPLICATION_JSON_VALUE)
           .body(parkingCreateDTO)
           .post("/parking")
-              .getBody().as(VehicleDTO.class);
+              .getBody().as(ParkingDTO.class);
 
       ParkedCreateDTO parkedCreateDTO = new ParkedCreateDTO();
 
-      parkedCreateDTO.vehicleId = vehicleDTO.getId();
-      parkedCreateDTO.parkingId = parkingDTO.getId();
+      parkedCreateDTO.setVehicleDTO(vehicleDTO);
+      parkedCreateDTO.setParkingDTO(parkingDTO);
 
       RestAssured.given()
           .when()
@@ -66,8 +71,8 @@ public class ParkedControllerTest extends AbstractContainerBase{
           .post("/parked/checkin")
           .then()
           .statusCode(HttpStatus.CREATED.value())
-          .body("vehicleId", Matchers.equalTo(vehicleDTO.getId()))
-          .body("parkingId", Matchers.equalTo(parkingDTO.getId()));
+          .body("vehicle", Matchers.equalTo(vehicleDTO))
+          .body("parking", Matchers.equalTo(parkingDTO));
 
       RestAssured.given()
           .when()
@@ -89,7 +94,7 @@ public class ParkedControllerTest extends AbstractContainerBase{
       vehicleCreateDTO.setModel("BRASILIA");
       vehicleCreateDTO.setState("SP");
 
-      var parkingCreateDTO = new VehicleCreateDTO();
+      var parkingCreateDTO = new ParkingCreateDTO();
       parkingCreateDTO.setCapacity(0);
       parkingCreateDTO.setName("Estacionamento Teste");
 
@@ -101,18 +106,18 @@ public class ParkedControllerTest extends AbstractContainerBase{
           .post("/vehicle")
           .getBody().as(VehicleDTO.class);
 
-      VehicleDTO parkingDTO = RestAssured.given()
+      ParkingDTO parkingDTO = RestAssured.given()
           .when()
           .auth().basic("user", "12345")
           .contentType(MediaType.APPLICATION_JSON_VALUE)
           .body(parkingCreateDTO)
           .post("/parking")
-          .getBody().as(VehicleDTO.class);
+          .getBody().as(ParkingDTO.class);
 
       ParkedCreateDTO parkedCreateDTO = new ParkedCreateDTO();
 
-      parkedCreateDTO.vehicleId = vehicleDTO.getId();
-      parkedCreateDTO.parkingId = parkingDTO.getId();
+      parkedCreateDTO.setVehicleDTO(vehicleDTO);
+      parkedCreateDTO.setParkingDTO(parkingDTO);
 
       RestAssured.given()
           .when()
