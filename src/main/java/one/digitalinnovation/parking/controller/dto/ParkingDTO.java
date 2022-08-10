@@ -1,85 +1,43 @@
 package one.digitalinnovation.parking.controller.dto;
 
-import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ParkingDTO {
 
-    private String id;
-    private String license;
-    private String state;
-    private String model;
-    private String color;
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-    private LocalDateTime entryDate;
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-    private LocalDateTime exitDate;
-    private Double bill;
+  private Long id;
 
-    public String getId() {
-        return id;
-    }
+  private String name;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  private Integer capacity;
 
-    public String getLicense() {
-        return license;
-    }
+  public ParkingDTO() {
+  }
 
-    public void setLicense(String license) {
-        this.license = license;
-    }
+  public ParkingDTO(Long id, String name, Integer capacity) {
+    this.id = id;
+    this.name = name;
+    this.capacity = capacity;
+  }
 
-    public String getState() {
-        return state;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public void setState(String state) {
-        this.state = state;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public String getModel() {
-        return model;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setModel(String model) {
-        this.model = model;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getColor() {
-        return color;
-    }
+  public Integer getCapacity() {
+    return capacity;
+  }
 
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public LocalDateTime getEntryDate() {
-        return entryDate;
-    }
-
-    public void setEntryDate(LocalDateTime entryDate) {
-        this.entryDate = entryDate;
-    }
-
-    public LocalDateTime getExitDate() {
-        return exitDate;
-    }
-
-    public void setExitDate(LocalDateTime exitDate) {
-        this.exitDate = exitDate;
-    }
-
-    public Double getBill() {
-        return bill;
-    }
-
-    public void setBill(Double bill) {
-        this.bill = bill;
-    }
+  public void setCapacity(Integer capacity) {
+    this.capacity = capacity;
+  }
 }

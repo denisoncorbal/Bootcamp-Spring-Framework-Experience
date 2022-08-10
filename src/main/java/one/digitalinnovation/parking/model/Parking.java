@@ -1,95 +1,56 @@
 package one.digitalinnovation.parking.model;
 
-import java.time.LocalDateTime;
-
+import java.util.Set;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Parking {
 
-    @Id
-    private String id;
-    private String license;
-    private String state;
-    private String model;
-    private String color;
-    private LocalDateTime entryDate;
-    private LocalDateTime exitDate;
-    private Double bill;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
 
-    public Parking(String id, String license, String state, String model, String color) {
-        this.id = id;
-        this.license = license;
-        this.state = state;
-        this.model = model;
-        this.color = color;
-    }
+  private String name;
 
-    public Parking() {
-    }
+  private Integer capacity;
 
-    public String getId() {
-        return id;
-    }
+  @OneToMany
+  private Set<Parked> parkeds;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public Parking() {
+  }
 
-    public String getLicense() {
-        return license;
-    }
+  public Parking(Long id, String name, Integer capacity) {
+    this.id = id;
+    this.name = name;
+    this.capacity = capacity;
+  }
 
-    public void setLicense(String license) {
-        this.license = license;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public String getState() {
-        return state;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public void setState(String state) {
-        this.state = state;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public String getModel() {
-        return model;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setModel(String model) {
-        this.model = model;
-    }
+  public Integer getCapacity() {
+    return capacity;
+  }
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public LocalDateTime getEntryDate() {
-        return entryDate;
-    }
-
-    public void setEntryDate(LocalDateTime entryDate) {
-        this.entryDate = entryDate;
-    }
-
-    public LocalDateTime getExitDate() {
-        return exitDate;
-    }
-
-    public void setExitDate(LocalDateTime exitDate) {
-        this.exitDate = exitDate;
-    }
-
-    public Double getBill() {
-        return bill;
-    }
-
-    public void setBill(Double bill) {
-        this.bill = bill;
-    }
+  public void setCapacity(Integer capacity) {
+    this.capacity = capacity;
+  }
 }

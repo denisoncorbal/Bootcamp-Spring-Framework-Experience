@@ -2,40 +2,31 @@ package one.digitalinnovation.parking.controller.dto;
 
 public class ParkingCreateDTO {
 
-    private String license;
-    private String state;
-    private String model;
-    private String color;
+  private String name;
 
-    public String getLicense() {
-        return license;
-    }
+  private Integer capacity;
 
-    public void setLicense(String license) {
-        this.license = license;
-    }
+  public ParkingCreateDTO() {
+  }
 
-    public String getState() {
-        return state;
-    }
+  public ParkingCreateDTO(String name, Integer capacity) {
+    this.name = name;
+    this.capacity = capacity;
+  }
 
-    public void setState(String state) {
-        this.state = state;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public String getModel() {
-        return model;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setModel(String model) {
-        this.model = model;
-    }
+  public Integer getCapacity() {
+    return capacity;
+  }
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
+  public void setCapacity(Integer capacity) {
+    this.capacity = capacity;
+  }
 }
