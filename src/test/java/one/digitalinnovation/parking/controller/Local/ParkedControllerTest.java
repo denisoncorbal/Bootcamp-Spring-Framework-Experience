@@ -1,4 +1,4 @@
-package one.digitalinnovation.parking.controller.TestContainer;
+package one.digitalinnovation.parking.controller.Local;
 
 import io.restassured.RestAssured;
 import one.digitalinnovation.parking.controller.dto.ParkedCreateDTO;
@@ -14,10 +14,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 
+
+@DisabledOnOs(OS.LINUX)
+@ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DisabledOnOs(OS.WINDOWS)
-public class ParkedControllerTest extends AbstractContainerBase {
+public class ParkedControllerTest {
 
   @LocalServerPort
   private int randomPort;
@@ -136,6 +139,5 @@ public class ParkedControllerTest extends AbstractContainerBase {
         .assertThat()
         .statusCode(HttpStatus.FORBIDDEN.value());
   }
-
 
 }

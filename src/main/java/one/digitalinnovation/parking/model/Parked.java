@@ -2,6 +2,7 @@ package one.digitalinnovation.parking.model;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +22,6 @@ public class Parked {
   private Parking parking;
 
   private LocalDateTime entryDate;
-
   private LocalDateTime exitDate;
 
   private Double bill;

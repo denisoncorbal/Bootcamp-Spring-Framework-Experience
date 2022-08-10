@@ -1,4 +1,4 @@
-package one.digitalinnovation.parking.controller.TestContainer;
+package one.digitalinnovation.parking.controller.Local;
 
 import io.restassured.RestAssured;
 import one.digitalinnovation.parking.controller.dto.VehicleCreateDTO;
@@ -11,10 +11,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 
+@DisabledOnOs(OS.LINUX)
+@ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DisabledOnOs(OS.WINDOWS)
-class VehicleControllerTest extends AbstractContainerBase {
+public class VehicleControllerTest {
 
   @LocalServerPort
   private int randomPort;
@@ -53,4 +55,5 @@ class VehicleControllerTest extends AbstractContainerBase {
         .body("license", Matchers.equalTo("WRT-5555"))
         .body("color", Matchers.equalTo("AMARELO"));
   }
+
 }

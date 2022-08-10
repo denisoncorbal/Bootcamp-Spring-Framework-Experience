@@ -2,7 +2,10 @@ package one.digitalinnovation.parking.service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 import one.digitalinnovation.parking.exception.ParkedNotFoundException;
+import one.digitalinnovation.parking.exception.ParkingCapacityExceededException;
+import one.digitalinnovation.parking.exception.VehicleAlreadyParkedException;
 import one.digitalinnovation.parking.model.Parked;
 import one.digitalinnovation.parking.repository.ParkedRepository;
 import org.springframework.stereotype.Service;
@@ -27,8 +30,13 @@ public class ParkedService {
   @Transactional
   public Parked create(Parked parkedCreate) {
     parkedCreate.setEntryDate(LocalDateTime.now());
-    parkedRepository.save(parkedCreate);
-    return parkedCreate;
+    if(checkParkedPending(parkedCreate).isPresent())
+        if(checkParkingCapacity(parkedCreate).isPresent())
+          return parkedRepository.save(parkedCreate);
+      else
+        throw new ParkingCapacityExceededException(parkedCreate.getParking().getId());
+    else
+      throw new VehicleAlreadyParkedException(parkedCreate.getVehicle().getId());
   }
 
   @Transactional
@@ -67,6 +75,20 @@ public class ParkedService {
       bill += DAY_VALUE;
     }
     return bill;
+  }
+
+  private Optional<Parked> checkParkedPending(Parked parked){
+    if(parkedRepository.checkParkedPending(parked.getVehicle().getId())){
+      parked = null;
+    }
+    return Optional.ofNullable(parked);
+  }
+
+  private Optional<Parked> checkParkingCapacity(Parked parked){
+    if(parkedRepository.checkParkingCapacity(parked.getParking().getId())){
+      parked = null;
+    }
+    return Optional.ofNullable(parked);
   }
 
 }
